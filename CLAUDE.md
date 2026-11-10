@@ -9,9 +9,10 @@
 - 진행 상태 (2026-11-10): 설계 승인, 계획서 작성 완료. 코드는 아직 없다.
   - 설계: `docs/superpowers/specs/2026-11-10-receipt-lists-design.md`
   - 계획서(원본): `docs/superpowers/plans/2026-11-10-receipt-ocr.md` — Claude Docs의 예전 계획서는 더 이상 갱신하지 않는다
-  - 다음 할 일: 새 세션에서 "계획서의 1단계를 진행해" (공용 코어, Task 1.1부터)
+  - 다음 할 일: 새 세션에서 "계획서의 1단계를 진행해" (공용 코어, Task 1.1부터). 실행 방식은 **서브에이전트**(superpowers:subagent-driven-development, 소유자 결정).
+  - 원격 저장소: `JIGAP-APPEM/blizeon-zigae-ocr` (공개, `origin`, 브랜치 `main`)
   - 라이선스: MIT (`LICENSE`). 공식 로고·이미지와 기본 데이터는 MIT 대상이 아니다.
-  - 소유자 확인 대기: SchaleDB 데이터 사용 허락, 원본 해상도 영수증 사진(5단계 전 필수), 앱 이름·ID, GitHub 원격 저장소 이름(아직 안 만듦)
+  - 소유자 확인 대기: SchaleDB 데이터 사용 여부(조사 결과 정리 중), 원본 해상도 영수증 사진(5단계 전 필수), 앱 이름·ID(2단계 시작 때)
 
 ## 2. 구조
 
