@@ -1,0 +1,24 @@
+#!/bin/sh
+# 공개 저장소 커밋 차단 훅. 걸리면 --no-verify로 넘기지 말고 원인을 지운다.
+# shortcut: 정규식 몇 개만 검사한다, 비밀값 종류가 늘면 gitleaks로 바꾼다.
+fail=0
+files=$(git diff --cached --name-only --diff-filter=ACMR)
+[ -z "$files" ] && exit 0
+
+# 1) 파일 종류: 키·환경파일, 허용 경로 밖의 이미지(실제 영수증 사진 방지)
+bad=$(printf '%s\n' "$files" | grep -iE '\.(jks|keystore|p12|pem)$|(^|/)\.env|(^|/)(local|keystore)\.properties$|google-services\.json$')
+imgs=$(printf '%s\n' "$files" | grep -iE '\.(jpe?g|png|heic|heif|webp|gif|bmp)$' | grep -vE '^(android/app/src/main/res/|public/icons/)')
+[ -n "$bad" ] && { echo "[pre-commit] 비밀값 파일:"; echo "$bad"; fail=1; }
+[ -n "$imgs" ] && { echo "[pre-commit] 허용 경로 밖 이미지 (필요하면 이 훅의 허용 목록에 경로 추가):"; echo "$imgs"; fail=1; }
+
+# 2) 내용: API 키, 토큰, 개인키, 로컬 사용자 경로, 개인 이메일
+secret=$(git grep --cached -I -lE 'AIza[0-9A-Za-z_-]{35}|gh[pousr]_[0-9A-Za-z]{36}|-----BEGIN [A-Z ]*PRIVATE KEY-----|[Cc]:[\\/]+Users[\\/]')
+[ -n "$secret" ] && { echo "[pre-commit] 키·토큰·로컬 경로가 든 파일:"; echo "$secret"; fail=1; }
+email=$(git config --global user.email)
+if [ -n "$email" ] && [ "$email" != "$(git config user.email)" ]; then
+  leak=$(git grep --cached -I -liF "$email")
+  [ -n "$leak" ] && { echo "[pre-commit] 개인 이메일이 든 파일:"; echo "$leak"; fail=1; }
+fi
+
+[ $fail -eq 0 ] || echo "[pre-commit] 커밋을 막았습니다."
+exit $fail
