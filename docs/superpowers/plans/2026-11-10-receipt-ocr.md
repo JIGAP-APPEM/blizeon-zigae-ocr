@@ -263,7 +263,7 @@ UI 없이 `src/core/`만 만든다. 끝나면 손으로 만든 OcrLine(가짜 �
 - Create: `package.json`, `tsconfig.json`, `vite.config.ts`, `index.html`, `src/main.ts`, `src/core/types.ts`, `src/core/config.ts`, `tests/helpers.ts`, `.github/workflows/ci.yml`
 - Modify: `CLAUDE.md`(「3. 스택·실행」, 「5. 지킬 것」에 Global Constraints), `.gitignore`(빠진 항목만)
 
-- [ ] **Step 1:** Vite `vanilla-ts` 구성을 직접 만든다(폴더가 비어 있지 않으므로 create-vite 대화형 대신 파일을 쓴다). `vitest`, `ajv`, `es-hangul`, `idb-keyval`를 설치한다. `package.json`에 `"private": true`, `version`은 `"0.0.0"`으로 두고 앱 버전은 쓰지 않는다(버전은 태그에서 온다).
+- [ ] **Step 1:** Vite `vanilla-ts` 구성을 직접 만든다(폴더가 비어 있지 않으므로 create-vite 대화형 대신 파일을 쓴다). `vitest`, `ajv`, `es-hangul`, `idb-keyval`를 설치한다. `package.json`에 `"private": true`, `"license": "MIT"`, `version`은 `"0.0.0"`으로 두고 앱 버전은 쓰지 않는다(버전은 태그에서 온다).
 - [ ] **Step 2:** `tsconfig.json`: `strict`, `noUncheckedIndexedAccess`, `resolveJsonModule`. `vite.config.ts`: 빌드 입력은 `index.html` 하나(`tools/` 제외), Vitest 환경 `node`.
 - [ ] **Step 3:** `src/core/types.ts`에 「핵심 인터페이스 · 공용 타입」을, `src/core/config.ts`에 「임계값」 표 전부를 쓰고, `tests/helpers.ts`에 `L`, `rowsOf`, `SAMPLE_DICTS`를 만든다(「테스트 헬퍼」 참고).
 - [ ] **Step 4:** `ci.yml`: push·PR마다 `npm ci` → `npm test` → `npm run build`.
@@ -1031,9 +1031,9 @@ expect(isNewer('v1.2.34', '1.2.34a')).toBe(false);
 
 ### Task 5.5: 라이선스·고지·크레딧
 
-**Files:** Create `LICENSE`, `THIRD_PARTY_NOTICES.md` · Modify `src/ui/`(푸터·정보 화면)
+**Files:** Create `THIRD_PARTY_NOTICES.md` · Modify `src/ui/`(푸터·정보 화면)
 
-- [ ] **Step 1:** 프로젝트 라이선스는 소유자에게 묻는다(제안: MIT).
+- [ ] **Step 1:** 프로젝트 라이선스는 MIT(소유자 결정, 2026-11-10). `LICENSE`는 이미 저장소에 있다. 배포물에 포함되는 제3자 자료(공식 로고·이미지 조각, 기본 데이터)는 MIT 대상이 아님을 README와 THIRD_PARTY_NOTICES에 밝힌다.
 - [ ] **Step 2:** THIRD_PARTY_NOTICES: 배포물에 포함되는 패키지의 라이선스 전문(Capacitor, es-hangul, idb-keyval, Ajv 생성 코드 등), ML Kit은 Google 약관 링크, 기본 데이터를 커밋했다면 SchaleDB 출처.
 - [ ] **Step 3:** 앱 정보 화면·README: "비공식 팬메이드 도구", "블루 아카이브 · 넥슨" 출처 표기, 제작 크레딧(Jigap-Appem), GitHub Issues 링크, "사진은 기기 밖으로 나가지 않습니다".
 - [ ] **Step 4: Commit** `docs: license, notices and credits`
@@ -1141,7 +1141,6 @@ expect(planTiles(1000, 1600, 120)).toEqual([{ y: 0, h: 1000 }]);
 - 원본 해상도 영수증 사진 한 세트(구간별, 위아래 겹치게). 5단계 시작 조건. 저장소에는 올리지 않는다.
 - SchaleDB 데이터 사용 허락 확인(소유자). 확인 전에는 변환 결과를 커밋하지 않는다.
 - 앱 이름, 앱 ID(예: `io.github.<아이디>.<이름>`), GitHub 저장소 이름(owner/repo), pages.dev 주소. GitHub 원격 저장소는 아직 만들지 않았다.
-- 프로젝트 라이선스(제안: MIT).
 - 이용자 중 미성년자 비율. Gemini 약관은 18세 미만 대상 서비스에서의 사용을 막고 있어, AI 기능을 어떻게 노출할지에 영향을 준다.
 - (6단계 전) 글꼴, 공식 이미지 조각.
 - 참고: 넥슨코리아 「게임IP사용가이드」(https://m.nexon.com/terms/743)는 비영리 앱 제작 시 고객센터 개별 문의를 권한다(설계 11장).
